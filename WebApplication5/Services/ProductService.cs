@@ -16,11 +16,10 @@ public class ProductService:IProductService
         return _productRepository.GetProductById(id);
     }
 
-    public Task<IEnumerable<Product?>> GetAllProducts()
+    public Task<IEnumerable<ProductViewModel?>> GetProducts(string keyword, string? sortBy, int? page, int? limit)
     {
-        return _productRepository.GetAllProducts();
+        return _productRepository.GetProducts(keyword, sortBy, page, limit);
     }
-
     public Task AddProduct(ProductViewModel productViewModel)
     {
         return _productRepository.AddProduct(productViewModel);

@@ -15,13 +15,13 @@ namespace WebApplication5.Models
         public string Name { get; set; }
 
         [Column("price")]
-        public decimal? Price { get; set; }
+        public decimal Price { get; set; }
         
         [Column("thumbnail")]
         [MaxLength(255)]
-        public string Thumbnail { get; set; }
+        public string? Thumbnail { get; set; }
         [Column("description")]
-        public string Description { get; set; }
+        public string? Description { get; set; }
         [Column("created_at")]
         public DateTime? CreatedAt { get; set; }
         [Column("updated_at")]

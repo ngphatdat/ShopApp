@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
 using WebApplication5.Models;
 using WebApplication5.ViewModels;
@@ -22,16 +23,46 @@ public class ProductRepository:IProductRepository
         return product;
     }
 
-    public async Task<IEnumerable<Product?>> GetAllProducts()
+    public async Task<IEnumerable<ProductViewModel?>> GetProducts(string? keyword, string? sortBy, int? page, int? limit)
     {
-        var products = await _context.Products.ToListAsync();
-        if (products == null)
+        var products = _context.Products.AsQueryable();
+        if (!string.IsNullOrEmpty(keyword))
         {
-            throw new Exception("No products found");
+            products = products.Where(p => p.Name.Contains(keyword));
         }
-
-        return products;
-
+        products = products.OrderBy(p => p.Id);
+        if(!string.IsNullOrEmpty(sortBy))
+        {
+            switch (sortBy)
+            {
+                case "name_desc":
+                    products = products.OrderByDescending(p => p.Name);
+                    break;
+                case "price_desc":
+                    products = products.OrderByDescending(p => p.Price);
+                    break;
+                case "price_asc":
+                    products = products.OrderBy(p => p.Price);
+                    break;
+                case "createdAt":
+                    products = products.OrderBy(p => p.CreatedAt);
+                    break;
+                case "updatedAt":
+                    products = products.OrderBy(p => p.UpdatedAt);
+                    break;
+                default:
+                    break;
+            }
+        }
+        var productsPage=PaginatedList<Product>.Create(products, page ?? 1, limit ?? 10);
+        return  productsPage.Select(p => new ProductViewModel
+        {   ProductId = p.Id,
+            Name = p.Name,
+            Price = p.Price,
+            Description = p.Description,
+            CategoryId = p.CategoryId,
+            Thumbnail = p.Thumbnail
+        }); 
     }
 
     public Task AddProduct(ProductViewModel productViewModel)

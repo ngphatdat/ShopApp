@@ -6,7 +6,7 @@ namespace WebApplication5.Services;
 public interface IProductService
 {
     Task<Product?> GetProductById(int id);
-    Task<IEnumerable<Product?>> GetAllProducts();
+    Task<IEnumerable<ProductViewModel?>> GetProducts(string keyword, string? sortBy, int? page, int? limit);
     Task AddProduct(ProductViewModel productViewModel);
     Task UpdateProduct(ProductViewModel productViewModel);
     Task DeleteProduct(int id);
