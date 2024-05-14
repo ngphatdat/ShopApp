@@ -1,0 +1,53 @@
+{
+  "Files": [
+    {
+      "Id": "/Users/phatdat/Desktop/mvc/WebApplication5/WebApplication5/wwwroot/.DS_Store",
+      "PackagePath": "staticwebassets/.DS_Store"
+    },
+    {
+      "Id": "/Users/phatdat/Desktop/mvc/WebApplication5/WebApplication5/wwwroot/images/638512131331994090browco_back.png",
+      "PackagePath": "staticwebassets/images/638512131331994090browco_back.png"
+    },
+    {
+      "Id": "/Users/phatdat/Desktop/mvc/WebApplication5/WebApplication5/wwwroot/images/638512131679920790sâu4.png",
+      "PackagePath": "staticwebassets/images/638512131679920790sâu4.png"
+    },
+    {
+      "Id": "/Users/phatdat/Desktop/mvc/WebApplication5/WebApplication5/wwwroot/images/638512131742133290sâu4.png",
+      "PackagePath": "staticwebassets/images/638512131742133290sâu4.png"
+    },
+    {
+      "Id": "/Users/phatdat/Desktop/mvc/WebApplication5/WebApplication5/wwwroot/images/Screenshot 2024-05-12 at 21.59.29 (2).png",
+      "PackagePath": "staticwebassets/images/Screenshot 2024-05-12 at 21.59.29 (2).png"
+    },
+    {
+      "Id": "/Users/phatdat/Desktop/mvc/WebApplication5/WebApplication5/wwwroot/images/browco_back.png",
+      "PackagePath": "staticwebassets/images/browco_back.png"
+    },
+    {
+      "Id": "/Users/phatdat/Desktop/mvc/WebApplication5/WebApplication5/wwwroot/images/sâu1.png",
+      "PackagePath": "staticwebassets/images/sâu1.png"
+    },
+    {
+      "Id": "/Users/phatdat/Desktop/mvc/WebApplication5/WebApplication5/wwwroot/images/sâu2.png",
+      "PackagePath": "staticwebassets/images/sâu2.png"
+    },
+    {
+      "Id": "obj/Debug/net7.0/staticwebassets/msbuild.WebApplication5.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj/Debug/net7.0/staticwebassets/msbuild.build.WebApplication5.props",
+      "PackagePath": "build\\WebApplication5.props"
+    },
+    {
+      "Id": "obj/Debug/net7.0/staticwebassets/msbuild.buildMultiTargeting.WebApplication5.props",
+      "PackagePath": "buildMultiTargeting\\WebApplication5.props"
+    },
+    {
+      "Id": "obj/Debug/net7.0/staticwebassets/msbuild.buildTransitive.WebApplication5.props",
+      "PackagePath": "buildTransitive\\WebApplication5.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

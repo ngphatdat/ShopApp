@@ -23,9 +23,14 @@ public class ProductRepository:IProductRepository
         return product;
     }
 
-    public async Task<IEnumerable<ProductViewModel?>> GetProducts(string? keyword, string? sortBy, int? page, int? limit)
-    {
+    public async Task<ProductListViewModel?> GetProducts(string? keyword, int? categoryId  , string? sortBy, int? page, int? limit)
+    {   
         var products = _context.Products.AsQueryable();
+        
+        if (categoryId != 0)
+        {
+            products = products.Where(p => p.CategoryId == categoryId);
+        }
         if (!string.IsNullOrEmpty(keyword))
         {
             products = products.Where(p => p.Name.Contains(keyword));
@@ -54,15 +59,24 @@ public class ProductRepository:IProductRepository
                     break;
             }
         }
+        
         var productsPage=PaginatedList<Product>.Create(products, page ?? 1, limit ?? 10);
-        return  productsPage.Select(p => new ProductViewModel
-        {   ProductId = p.Id,
+        var productViewList =   productsPage.Select(p => new ProductViewModel
+        {   Id = p.Id,
             Name = p.Name,
             Price = p.Price,
             Description = p.Description,
-            CategoryId = p.CategoryId,
+            category_id = p.CategoryId,
             Thumbnail = p.Thumbnail
         }); 
+          
+          
+          ProductListViewModel productListViewModel = new ProductListViewModel
+          {
+              ProductsList = productViewList,
+              TotalPage = productsPage.TotalPages
+          };
+          return productListViewModel;
     }
 
     public Task AddProduct(ProductViewModel productViewModel)
@@ -74,7 +88,7 @@ public class ProductRepository:IProductRepository
                 Name = productViewModel.Name,
                 Price = productViewModel.Price,
                 Description = productViewModel.Description,
-                CategoryId = productViewModel.CategoryId,
+                CategoryId = productViewModel.category_id,
                 CreatedAt = DateTime.Today,
                 Thumbnail = productViewModel.Thumbnail,
                 UpdatedAt = null,

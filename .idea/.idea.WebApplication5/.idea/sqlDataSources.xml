@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DdlMappings">
+    <mapping uuid="37422c94-27a2-4ab8-bd33-6b3b02d6dda1" name="DotNetCore@localhost (DDL) Mapping">
+      <data-sources db="7b9ef21a-2a6a-48b7-9ee1-febd65e87a35" ddl="a7cebc06-628f-4b73-bccc-a34ea99bee87" />
+      <scope>
+        <node kind="database" negative="1">
+          <node kind="schema" negative="1" />
+        </node>
+      </scope>
+    </mapping>
+  </component>
+</project>

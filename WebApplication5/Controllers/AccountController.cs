@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using WebApplication5.Response;
 using WebApplication5.Services;
 using WebApplication5.ViewModels;
 
@@ -26,11 +27,14 @@ public class AccountController: ControllerBase
         [HttpPost("SignIn")]
         public async Task<IActionResult> SignInAsync(SignInViewModel signInViewModel)
         {
-            var token = await _accountService.SignInAsync(signInViewModel);
-            if (token == null)
+            try
             {
-                return Unauthorized();
+                var signInResponse = await _accountService.SignInAsync(signInViewModel);
+                return Ok(signInResponse);
             }
-            return Ok(token);
+            catch (Exception e)
+            {
+                return Unauthorized(e.Message);
+            }
         }
     }

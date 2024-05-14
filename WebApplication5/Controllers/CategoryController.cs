@@ -5,7 +5,6 @@ using WebApplication5.Services;
 
 namespace WebApplication5.Controllers;
 [ApiController]
-
 [Route("api/[controller]")]
 public class CategoryController : ControllerBase
 {
@@ -14,8 +13,8 @@ public class CategoryController : ControllerBase
     {
         _categoryService = categoryService;
     }
-    [Authorize (Roles = AppRole.Admin)]
-    [HttpGet ("all")]
+ //   [Authorize (Roles = AppRole.Admin)]
+    [HttpGet]
     public async Task<IActionResult> GetAllCategories()
     {
         var categories = await _categoryService.GetAllCategories();

@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using WebApplication5.Models;
+using WebApplication5.Response;
 using WebApplication5.ViewModels;
 using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames;
 
@@ -48,7 +49,7 @@ public class AccountRepository:IAccountRepository
         return result;
     }
 
-    public async Task<string> SignIn(SignInViewModel signInViewModel)
+    public async Task<SignInResponse> SignIn(SignInViewModel signInViewModel)
     {   //kiểm tra thông tin đăng nhập
         var result = await _signInManager.PasswordSignInAsync(signInViewModel.UserName, signInViewModel.Password, false, false);
         var user = await _userManager.FindByNameAsync(signInViewModel.UserName);
@@ -66,7 +67,6 @@ public class AccountRepository:IAccountRepository
         {
             new Claim(ClaimTypes.Name, signInViewModel.UserName),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-            
         };
         var userRoles = await _userManager.GetRolesAsync(user);
         //gán role vào claim
@@ -84,6 +84,11 @@ public class AccountRepository:IAccountRepository
             signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
         );
         //trả về token
-        return new JwtSecurityTokenHandler().WriteToken(token);
+            var signInResponse = new SignInResponse
+            {
+                Token = new JwtSecurityTokenHandler().WriteToken(token),
+                Message = "Login Success",
+            };
+        return signInResponse;
     }
 }

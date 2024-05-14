@@ -7,7 +7,7 @@ using WebApplication5.ViewModels;
 namespace WebApplication5.Controllers;
 [ApiController]
 [Route("api/[controller]")]
-[Authorize(Roles = AppRole.Admin)]
+//[Authorize(Roles = AppRole.Admin)]
 public class ProductController:ControllerBase
 {
     private readonly IProductService _productService;
@@ -16,11 +16,12 @@ public class ProductController:ControllerBase
         _productService = productService;
     }
     [HttpGet ("all")]
-    public async Task<IActionResult> GetProducts(string? keyword, string? sortBy, int page, int limit)
+    public async Task<IActionResult> GetProducts(string? keyword, int categoryId , string? sortBy, int page, int limit)
     {
         try
         {
-            var products = await _productService.GetProducts(keyword, sortBy, page, limit);
+            var products = await _productService.GetProducts(keyword, categoryId,  sortBy, page, limit);
+            
             return Ok(products);
         }
         catch (Exception e)

@@ -16,9 +16,9 @@ public class ProductService:IProductService
         return _productRepository.GetProductById(id);
     }
 
-    public Task<IEnumerable<ProductViewModel?>> GetProducts(string keyword, string? sortBy, int? page, int? limit)
+    public async Task<ProductListViewModel?> GetProducts(string keyword, int? categoryId, string? sortBy, int? page, int? limit)
     {
-        return _productRepository.GetProducts(keyword, sortBy, page, limit);
+        return await _productRepository.GetProducts(keyword, categoryId, sortBy, page, limit);
     }
     public Task AddProduct(ProductViewModel productViewModel)
     {
