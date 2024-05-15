@@ -7,5 +7,6 @@ public interface IProductImageService
 {
     Task AddProductImageAsync(string url, int productId);
     Task<string> GetProductImageAsync(int productId);
+    Task DeleteProductImageAsync(int productId);
     
 }

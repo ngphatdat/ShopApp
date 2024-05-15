@@ -14,19 +14,19 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" 
+                        <a class="nav-link"
                           [ngClass]="{ 'active': activeNavItem === 0 }"
                           (click)="setActiveNavItem(0)"
-                          routerLink="/">Trang chủ</a>
+                          routerLink="">Trang chủ</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" 
+                        <a class="nav-link"
                           [ngClass]="{ 'active': activeNavItem === 1 }"
                           (click)="setActiveNavItem(1)"
                           routerLink="/">Thông báo</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" 
+                        <a class="nav-link"
                             [ngClass]="{ 'active': activeNavItem === 2 }"
                             (click)="setActiveNavItem(2)"
                             routerLink="/orders">
@@ -43,7 +43,7 @@
                             [placement]="'bottom'"
                           >
                             <a
-                              class="nav-link"                              
+                              class="nav-link"
                               [ngbPopover]="popoverContent"
                               (click)="togglePopover($event)"
                             >
@@ -51,11 +51,11 @@
                             </a>
                             <ng-template #popoverContent>
                               <div class="popover-list">
-                                <a class="popover-item" 
+                                <a class="popover-item"
                                     (click)="handleItemClick(0)">Tài khoản của tôi</a>
-                                <a class="popover-item" 
+                                <a class="popover-item"
                                     (click)="handleItemClick(1)">Đơn mua</a>
-                                <a class="popover-item" 
+                                <a class="popover-item"
                                     (click)="handleItemClick(2)">Đăng xuất</a>
                               </div>
                             </ng-template>
@@ -64,7 +64,7 @@
                         <ng-container *ngIf="!userResponse">
                           <a class="nav-link" routerLink="/login">Đăng nhập</a>
                         </ng-container>
-                      </li>                                                                
+                      </li>
                 </ul>
             </div>
         </div>

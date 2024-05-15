@@ -47,13 +47,15 @@ export class ProductAdminComponent implements OnInit {
       this.productService.getProducts(keyword,categoryID,page,limit).subscribe({
         next: (response: any) => {
           debugger
-          response.products.forEach((product: Product) => {
+          this.products = response.productsList;
+          debugger
+          this.products.forEach((product: Product) => {
             if (product) {
-              product.url = `${environment.apiBaseUrl}/products/images/${product.thumbnail}`;
+              product.url = `https://localhost:7012/api/ProductImage/images/${product.thumbnail}`;
             }
           });
-          this.products = response.products;
-          this.totalPages = response.totalPages;
+          this.totalPages = response.totalPage;
+          debugger
           this.visiblePages = this.generateVisiblePageArray(this.currentPage, this.totalPages);
         },
         complete: () => {

@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace WebApplication5.Models
 {       [Table("products")]
@@ -27,6 +28,9 @@ namespace WebApplication5.Models
         [Column("updated_at")]
         public DateTime? UpdatedAt { get; set; }
         [Column("category_id")]
+        [ForeignKey("CategoryId")]
+        [JsonPropertyName("category_id")]
         public int? CategoryId { get; set; }
+        public ICollection<ProductImage> ProductImages { get; set; }
     }
 }

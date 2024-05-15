@@ -28,13 +28,21 @@ public class ProductImageController:ControllerBase
             {
                 return BadRequest("Image is required");
             }
-            var thumbnail =DateTime.Now.Ticks + img.Image.FileName;
-            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", thumbnail);
-            using ( var stream = new FileStream(path, FileMode.Create))
+            var images = img.Image;
+            if (images.Length > 5)
             {
-                await img.Image.CopyToAsync(stream);
+                return BadRequest("Maximum 5 images");
             }
-            await _productImageService.AddProductImageAsync( thumbnail, img.ProductId);
+            
+            foreach (var image in images)
+            {
+                var thumbnail =DateTime.Now.Ticks + image.FileName;
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", thumbnail); 
+                using ( var stream = new FileStream(path, FileMode.Create))
+                { await image.CopyToAsync(stream);
+                }
+                await _productImageService.AddProductImageAsync( thumbnail, img.ProductId);
+            }
             return Ok("update success");
     }
     [HttpGet("{productId}")]

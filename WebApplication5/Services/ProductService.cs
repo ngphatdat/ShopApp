@@ -1,5 +1,6 @@
 using WebApplication5.Models;
 using WebApplication5.Repositories;
+using WebApplication5.Response;
 using WebApplication5.ViewModels;
 
 namespace WebApplication5.Services;
@@ -7,9 +8,11 @@ namespace WebApplication5.Services;
 public class ProductService:IProductService
 {
     private readonly IProductRepository _productRepository;
-    public ProductService(IProductRepository productRepository)
+    private readonly IProductImageRepository _productImageRepository;
+    public ProductService(IProductRepository productRepository, IProductImageRepository productImageRepository)
     {
         _productRepository = productRepository;
+        _productImageRepository = productImageRepository;
     }
     public Task<Product?> GetProductById(int id)
     {
@@ -32,6 +35,7 @@ public class ProductService:IProductService
 
     public Task DeleteProduct(int id)
     {
-        throw new NotImplementedException();
+        _productImageRepository.DeleteProductImageAsync(id);
+        return  _productRepository.DeleteProduct(id);
     }
 }

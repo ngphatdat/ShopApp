@@ -6,6 +6,7 @@ namespace WebApplication5.Services;
 public class ProductImageService:IProductImageService
 {
     private readonly IProductImageRepository _productImageRepository;
+
     public ProductImageService(IProductImageRepository productImageRepository)
     {
         _productImageRepository = productImageRepository;
@@ -19,5 +20,10 @@ public class ProductImageService:IProductImageService
     public Task<string> GetProductImageAsync(int productId)
     {
         return _productImageRepository.GetProductImageAsync(productId);
+    }
+
+    public Task DeleteProductImageAsync(int productId)
+    {
+        return _productImageRepository.DeleteProductImageAsync(productId);
     }
 }

@@ -26,10 +26,10 @@ export class DetailProductComponent implements OnInit {
       private activatedRoute: ActivatedRoute,
       private router: Router,
     ) {
-      
+
     }
     ngOnInit() {
-      // Lấy productId từ URL      
+      // Lấy productId từ URL
       const idParam = this.activatedRoute.snapshot.paramMap.get('id');
       debugger
       //this.cartService.clearCart();
@@ -39,16 +39,15 @@ export class DetailProductComponent implements OnInit {
       }
       if (!isNaN(this.productId)) {
         this.productService.getDetailProduct(this.productId).subscribe({
-          next: (response: any) => {            
-            // Lấy danh sách ảnh sản phẩm và thay đổi URL
+          next: (response: any) => {
             debugger
             if (response.product_images && response.product_images.length > 0) {
               response.product_images.forEach((product_image:ProductImage) => {
                 product_image.image_url = `${environment.apiBaseUrl}/products/images/${product_image.image_url}`;
               });
-            }            
+            }
             debugger
-            this.product = response 
+            this.product = response
             // Bắt đầu với ảnh đầu tiên
             this.showImage(0);
           },
@@ -59,21 +58,21 @@ export class DetailProductComponent implements OnInit {
             debugger;
             console.error('Error fetching detail:', error);
           }
-        });    
+        });
       } else {
         console.error('Invalid productId:', idParam);
-      }      
+      }
     }
     showImage(index: number): void {
       debugger
-      if (this.product && this.product.product_images && 
+      if (this.product && this.product.product_images &&
           this.product.product_images.length > 0) {
-        // Đảm bảo index nằm trong khoảng hợp lệ        
+        // Đảm bảo index nằm trong khoảng hợp lệ
         if (index < 0) {
           index = 0;
         } else if (index >= this.product.product_images.length) {
           index = this.product.product_images.length - 1;
-        }        
+        }
         // Gán index hiện tại và cập nhật ảnh hiển thị
         this.currentImageIndex = index;
       }
@@ -82,16 +81,16 @@ export class DetailProductComponent implements OnInit {
       debugger
       // Gọi khi một thumbnail được bấm
       this.currentImageIndex = index; // Cập nhật currentImageIndex
-    }  
+    }
     nextImage(): void {
       debugger
       this.showImage(this.currentImageIndex + 1);
     }
-  
+
     previousImage(): void {
       debugger
       this.showImage(this.currentImageIndex - 1);
-    }      
+    }
     addToCart(): void {
       debugger
       this.isPressedAddToCart = true;
@@ -101,13 +100,13 @@ export class DetailProductComponent implements OnInit {
         // Xử lý khi product là null
         console.error('Không thể thêm sản phẩm vào giỏ hàng vì product là null.');
       }
-    }    
-        
+    }
+
     increaseQuantity(): void {
       debugger
       this.quantity++;
     }
-    
+
     decreaseQuantity(): void {
       if (this.quantity > 1) {
         this.quantity--;
@@ -119,10 +118,10 @@ export class DetailProductComponent implements OnInit {
       }
       return 0;
     }
-    buyNow(): void {      
+    buyNow(): void {
       if(this.isPressedAddToCart == false) {
         this.addToCart();
       }
       this.router.navigate(['/orders']);
-    }    
+    }
 }

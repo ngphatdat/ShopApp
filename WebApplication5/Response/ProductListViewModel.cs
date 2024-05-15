@@ -1,4 +1,6 @@
-namespace WebApplication5.ViewModels;
+using WebApplication5.ViewModels;
+
+namespace WebApplication5.Response;
 
 public class ProductListViewModel
 {

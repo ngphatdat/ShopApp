@@ -2,31 +2,30 @@
 <app-header></app-header>
 <div class="container">
     <div class="intro-section">
-        <h1>Đây là trang Home</h1>
-        <p>Trang này hiển thị danh sách các sản phẩm, kèm ảnh</p>
+        <h1>Shop Bán đồ điện tử </h1>
         <p>Các bạn có thể chọn xem sản phẩm và mua hàng tại đây</p>
     </div>
     <!--Đoạn này có 1 ô searchbox bên trái, 1 combobox bên phải  -->
     <div class="search-box">
-        <input type="text" class="form-control search-input" 
-            placeholder="Tìm sản phẩm" 
+        <input type="text" class="form-control search-input"
+            placeholder="Tìm sản phẩm"
             [(ngModel)]="keyword">
-        <select class="form-control product-category"             
+        <select class="form-control product-category"
             [(ngModel)]="selectedCategoryId">
-            <option [value]="0">Tất cả</option> 
+            <option [value]="0">Tất cả</option>
             <option *ngFor="let category of categories" [value]="category.id">
                 {{ category.name }}
             </option>
         </select>
         <button class="btn btn-primary" (click)="searchProducts()">Tìm kiếm</button>
-    </div>        
+    </div>
     <div class="row">
         <div class="col-lg-4 col-md-6" *ngFor="let product of products">
-            <div class="product-item" (click)="onProductClick(product.id)">
-                <img [src]="product.url" alt="Product Image" class="product-image">
-                <h3 class="product-name">{{ product.name }}</h3>
+            <div class="product-item" >
+                <img [src]="product.url" alt="Product Image" class="product-image" (click)="onProductClick(product.id)">
+                 <h3 class="product-name" >{{ product.name }}</h3>
                 <p class="product-description">{{ product.description }}</p>
-                <p class="product-price">Giá: ${{ product.price }}</p>                
+                <p class="product-price">Giá: ${{ product.price }}</p>
             </div>
         </div>
     </div>
@@ -59,5 +58,5 @@
       </ul>
     </nav>
   </div>
-      
+
 <app-footer></app-footer>

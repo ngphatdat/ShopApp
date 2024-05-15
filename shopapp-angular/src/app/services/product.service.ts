@@ -34,26 +34,28 @@ export class ProductService {
 
   getProductsByIds(productIds: number[]): Observable<Product[]> {
     const params = new HttpParams().set('ids', productIds.join(','));
-    return this.http.get<Product[]>(`${this.apiBaseUrl}/products/by-ids`, { params });
+    return this.http.get<Product[]>(`${this.apiBaseUrl}product/by-ids`, { params });
   }
   deleteProduct(productId: number): Observable<string> {
     debugger
-    return this.http.delete<string>(`${this.apiBaseUrl}/products/${productId}`);
+    return this.http.delete<string>(`${this.apiBaseUrl}product/delete/${productId}`);
   }
   updateProduct(productId: number, updatedProduct: UpdateProductDTO): Observable<UpdateProductDTO> {
-    return this.http.put<Product>(`${this.apiBaseUrl}/products/${productId}`, updatedProduct);
+    return this.http.put<Product>(`${this.apiBaseUrl}product/${productId}`, updatedProduct);
   }
   insertProduct(insertProductDTO: InsertProductDTO): Observable<any> {
     // Add a new product
-    return this.http.post(`${this.apiBaseUrl}/products`, insertProductDTO);
+    return this.http.post(`${this.apiBaseUrl}product/insert`, insertProductDTO);
   }
+
   uploadImages(productId: number, files: File[]): Observable<any> {
     const formData = new FormData();
+    formData.append('id', productId.toString());
     for (let i = 0; i < files.length; i++) {
       formData.append('files', files[i]);
     }
     // Upload images for the specified product id
-    return this.http.post(`${this.apiBaseUrl}/products/uploads/${productId}`, formData);
+    return this.http.post(`${this.apiBaseUrl}/productImage/`, formData);
   }
   deleteProductImage(id: number): Observable<any> {
     debugger

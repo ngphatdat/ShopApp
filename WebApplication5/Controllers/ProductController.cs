@@ -7,7 +7,6 @@ using WebApplication5.ViewModels;
 namespace WebApplication5.Controllers;
 [ApiController]
 [Route("api/[controller]")]
-//[Authorize(Roles = AppRole.Admin)]
 public class ProductController:ControllerBase
 {
     private readonly IProductService _productService;
@@ -16,11 +15,11 @@ public class ProductController:ControllerBase
         _productService = productService;
     }
     [HttpGet ("all")]
-    public async Task<IActionResult> GetProducts(string? keyword, int categoryId , string? sortBy, int page, int limit)
+    public async Task<IActionResult> GetProducts(string? keyword, int category_id , string? sortBy, int page, int limit)
     {
         try
         {
-            var products = await _productService.GetProducts(keyword, categoryId,  sortBy, page, limit);
+            var products = await _productService.GetProducts(keyword, category_id,  sortBy, page, limit);
             
             return Ok(products);
         }
@@ -36,11 +35,41 @@ public class ProductController:ControllerBase
         var product = await _productService.GetProductById(id);
         return Ok(product);
     }
+    [Authorize(Roles = AppRole.Admin)]
     [HttpPost ("add")]
     public async Task<IActionResult> AddProduct(ProductViewModel productViewModel)
     {
         await _productService.AddProduct(productViewModel);
         return Ok();
     }
-    
+    [Authorize(Roles = AppRole.Admin)]
+    [HttpPost ("insert")]
+        public async Task<IActionResult> InsertProduct(ProductViewModel productViewModel)
+        {
+            try
+            {
+                await _productService.AddProduct(productViewModel);
+                return Ok("Product inserted");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return BadRequest("Error");
+            }
+        }
+        [Authorize(Roles = AppRole.Admin)]
+        [HttpDelete ("delete/{id}")]
+        public async Task<IActionResult> DeleteProduct(int id)
+        {
+            try
+            {
+                await _productService.DeleteProduct(id);
+                return Ok("Product deleted");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return BadRequest("Error");
+            }
+        }
 }

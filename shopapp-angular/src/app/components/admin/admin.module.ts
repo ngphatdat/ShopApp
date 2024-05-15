@@ -19,10 +19,9 @@ import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AdminComponent,
-    OrderAdminComponent,    
+    OrderAdminComponent,
     ProductAdminComponent,
     CategoryAdminComponent,
-    //sub-components
     DetailOrderAdminComponent,
     UpdateProductAdminComponent,
     InsertProductAdminComponent,
@@ -31,7 +30,7 @@ import { FormsModule } from '@angular/forms';
     UpdateCategoryAdminComponent
   ],
   imports: [
-    AdminRoutingModule, // import routes,
+    AdminRoutingModule,
     CommonModule,
     FormsModule
   ]

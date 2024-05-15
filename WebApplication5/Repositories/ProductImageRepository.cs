@@ -53,4 +53,28 @@ public class ProductImageRepository:IProductImageRepository
     {
         throw new NotImplementedException();
     }
+    public async Task DeleteProductImageAsync(int productId)
+    {
+        try
+        {
+            IEnumerable<ProductImage> productImage =  _context.ProductImages.Where(x => x.ProductId == productId);
+            if (productImage == null)
+            {
+                throw new Exception("Product image not found");
+            }
+
+            foreach (var img in productImage)
+            {
+                _context.ProductImages.Remove(img);
+            }
+            
+            await _context.SaveChangesAsync();
+        } 
+        
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw new Exception("Error while deleting product image");
+        }
+    }
 }

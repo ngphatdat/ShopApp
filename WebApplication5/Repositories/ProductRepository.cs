@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
 using WebApplication5.Models;
+using WebApplication5.Response;
 using WebApplication5.ViewModels;
 
 namespace WebApplication5.Repositories;
@@ -8,6 +9,7 @@ namespace WebApplication5.Repositories;
 public class ProductRepository:IProductRepository
 {
     private readonly DotNetCoreContext _context;
+   // private readonly IProductImageRepository _productImageRepository;
     public ProductRepository(DotNetCoreContext context)
     {
         _context = context;
@@ -66,7 +68,7 @@ public class ProductRepository:IProductRepository
             Name = p.Name,
             Price = p.Price,
             Description = p.Description,
-            category_id = p.CategoryId,
+            CategoryId = p.CategoryId,
             Thumbnail = p.Thumbnail
         }); 
           
@@ -79,28 +81,27 @@ public class ProductRepository:IProductRepository
           return productListViewModel;
     }
 
-    public Task AddProduct(ProductViewModel productViewModel)
+    public async Task AddProduct(ProductViewModel productViewModel)
     {
         try
         {
-            _context.Products.Add(new Product
+            await _context.Products.AddAsync(new Product
             {
                 Name = productViewModel.Name,
                 Price = productViewModel.Price,
                 Description = productViewModel.Description,
-                CategoryId = productViewModel.category_id,
+                CategoryId = productViewModel.CategoryId,
                 CreatedAt = DateTime.Today,
-                Thumbnail = productViewModel.Thumbnail,
+                Thumbnail = productViewModel.Thumbnail ?? "",
                 UpdatedAt = null,
             });
-            _context.SaveChanges();
+             await _context.SaveChangesAsync();
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
             throw new Exception("Product not added");
         }
-        return Task.CompletedTask;
     }
 
     public Task UpdateProduct(ProductViewModel productViewModel)
@@ -108,8 +109,24 @@ public class ProductRepository:IProductRepository
         throw new NotImplementedException();
     }
 
-    public Task DeleteProduct(int id)
+    public async Task DeleteProduct(int id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var product =  await _context.Products.FindAsync(id);
+         //   await _productImageRepository.DeleteProductImageAsync(id);
+            if (product == null)
+            {
+                throw new Exception("Product not found");
+            }
+            _context.Products.Remove(product);
+
+            await _context.SaveChangesAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw new  Exception("Product not deleted");
+        }
     }
 }

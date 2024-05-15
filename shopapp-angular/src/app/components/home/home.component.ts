@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit {
   categories: Category[] = []; // Dữ liệu động từ categoryService
   selectedCategoryId: number  = 0; // Giá trị category được chọn
   currentPage: number = 1;
-  itemsPerPage: number = 12;
+  itemsPerPage: number = 6;
   pages: number[] = [];
   totalPages:number = 0;
   visiblePages: number[] = [];
@@ -38,6 +38,7 @@ export class HomeComponent implements OnInit {
         next: (categories: Category[]) => {
           debugger;
           this.categories = categories;
+          console.log(this.categories);
         },
         complete: () => {
           debugger;
@@ -50,11 +51,12 @@ export class HomeComponent implements OnInit {
 
     searchProducts() {
       this.currentPage = 1;
-      this.itemsPerPage = 12;
+      this.itemsPerPage = 6;
       debugger;
       this.getProducts(this.keyword, this.selectedCategoryId, this.currentPage, this.itemsPerPage);
+      console.log(this.selectedCategoryId);
+      debugger
     }
-
 
     getProducts(keyword: string, category_id : number,  page: number, limit: number) {
       debugger;
@@ -63,7 +65,7 @@ export class HomeComponent implements OnInit {
           this.products = response.productsList;
           console.log(this.products);
           debugger;
-          this.totalPages = response.totalPages;
+          this.totalPages = response.totalPage;
           console.log(this.totalPages);
           this.products.forEach((product: Product) => {
             console.log(product.thumbnail);
@@ -71,7 +73,6 @@ export class HomeComponent implements OnInit {
            console.log(product.url);
           });
           debugger;
-
           this.visiblePages = this.generateVisiblePageArray(this.currentPage, this.totalPages);
         },
         complete: () => {
@@ -85,22 +86,25 @@ export class HomeComponent implements OnInit {
     }
     onPageChange(page: number) {
       debugger;
-      this.currentPage = page < 0 ? 0 : page;
+      let page_now = page+1;
+      this.currentPage = page_now < 0 ? 0 : page_now;
       localStorage.setItem('currentProductPage', String(this.currentPage));
+      debugger
       this.getProducts(this.keyword, this.selectedCategoryId, this.currentPage, this.itemsPerPage);
+      debugger
     }
 
     generateVisiblePageArray(currentPage: number, totalPages: number): number[] {
       const maxVisiblePages = 5;
       const halfVisiblePages = Math.floor(maxVisiblePages / 2);
-
+      debugger
       let startPage = Math.max(currentPage - halfVisiblePages, 1);
       let endPage = Math.min(startPage + maxVisiblePages - 1, totalPages);
-
+      debugger
       if (endPage - startPage + 1 < maxVisiblePages) {
         startPage = Math.max(endPage - maxVisiblePages + 1, 1);
       }
-
+      debugger
       return new Array(endPage - startPage + 1).fill(0)
         .map((_, index) => startPage + index);
     }
@@ -109,6 +113,6 @@ export class HomeComponent implements OnInit {
     onProductClick(productId: number) {
       debugger;
       // Điều hướng đến trang detail-product với productId là tham số
-      this.router.navigate(['/product', productId]);
+      this.router.navigate(['/products', productId]);
     }
 }

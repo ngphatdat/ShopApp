@@ -21,11 +21,11 @@ export class AdminGuard {
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const isTokenExpired = this.tokenService.isTokenExpired();
-    const isUserIdValid = this.tokenService.getUserId() > 0;
+  //  const isUserIdValid = this.tokenService.getUserId() > 0;
     const isAdmin = this.tokenService.getRole() == 'Administator';
      this.userResponse = this.userService.getUserResponseFromLocalStorage();
     debugger
-    if (!isTokenExpired && isUserIdValid && isAdmin) {
+    if (!isTokenExpired && isAdmin) {
       return true;
     } else {
       this.router.navigate(['/login']);
